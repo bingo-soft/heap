@@ -1,17 +1,16 @@
 <?php
 
-namespace heap\tree;
+namespace heap;
 
+use Exception;
 use InvalidArgumentException;
-use heap\AddressableHeapInterface;
-use heap\AddressableHeapHandleInterface;
 
 /**
  * Class FibonacciHeap
  *
- * @package heap\tree
+ * @package heap
  */
-class FibonacciHeap implements AddressableHeapInterface
+class FibonacciHeap
 {
     /**
      * Heap node with the minimal key
@@ -62,11 +61,11 @@ class FibonacciHeap implements AddressableHeapInterface
      * @param int $key - node key
      * @param null|mixed $value - node value
      *
-     * @return AddressableHeapHandleInterface
+     * @return FibonacciHeapNode
      *
      * @throws Exception
      */
-    public function insert(int $key, $value = null): AddressableHeapHandleInterface
+    public function insert(int $key, $value = null): FibonacciHeapNode
     {
         if ($this->other != $this) {
             throw new Exception("A heap cannot be used after a meld");
@@ -81,11 +80,11 @@ class FibonacciHeap implements AddressableHeapInterface
     /**
      * Find heap node with the minimal key
      *
-     * @return AddressableHeapHandleInterface
+     * @return FibonacciHeapNode
      *
      * @throws Exception
      */
-    public function findMin(): AddressableHeapHandleInterface
+    public function findMin(): FibonacciHeapNode
     {
         if ($this->size == 0) {
             throw new Exception("No such element!");
@@ -96,9 +95,9 @@ class FibonacciHeap implements AddressableHeapInterface
     /**
      * Get an element with the minimum key.
      *
-     * @return AddressableHeapHandleInterface
+     * @return FibonacciHeapNode
      */
-    public function deleteMin(): AddressableHeapHandleInterface
+    public function deleteMin(): FibonacciHeapNode
     {
         if ($this->size == 0) {
             throw new Exception("No such element!");
@@ -188,9 +187,9 @@ class FibonacciHeap implements AddressableHeapInterface
     /**
      * Meld other heap to the current heap
      *
-     * @param AddressableHeapInterface $other - the heap to be melded
+     * @param FibonacciHeap $other - the heap to be melded
      */
-    public function meld(AddressableHeapInterface $other): void
+    public function meld(FibonacciHeap $other): void
     {
         if ($other->other != $other) {
             throw new Exception("A heap cannot be used after a meld.");
@@ -423,8 +422,8 @@ class FibonacciHeap implements AddressableHeapInterface
         } else {
             $node->next = $this->minRoot->next;
             $node->prev = $this->minRoot;
-            $minRoot->next->prev = $node;
-            $minRoot->next = $node;
+            $this->minRoot->next->prev = $node;
+            $this->minRoot->next = $node;
 
             if ($node->key < $this->minRoot->key) {
                 $this->minRoot = $node;

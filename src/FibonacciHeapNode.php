@@ -1,21 +1,18 @@
 <?php
 
-namespace heap\tree;
-
-use heap\AddressableHeapInterface;
-use heap\AddressableHeapHandleInterface;
+namespace heap;
 
 /**
  * Class FibonacciHeapNode
  *
  * @package heap\tree
  */
-class FibonacciHeapNode implements AddressableHeapHandleInterface
+class FibonacciHeapNode
 {
     /**
      * Node heap
      *
-     * @var AddressableHeapInterface
+     * @var FibonacciHeap
      */
     public $heap;
     
@@ -29,28 +26,28 @@ class FibonacciHeapNode implements AddressableHeapHandleInterface
     /**
      * Parent node
      *
-     * @var AddressableHeapHandleInterface
+     * @var FibonacciHeapNode
      */
     public $parent = null;
     
     /**
      * Child node
      *
-     * @var AddressableHeapHandleInterface
+     * @var FibonacciHeapNode
      */
     public $child = null;
     
     /**
      * Previous node
      *
-     * @var AddressableHeapHandleInterface
+     * @var FibonacciHeapNode
      */
     public $prev = null;
     
     /**
      * Next node
      *
-     * @var AddressableHeapHandleInterface
+     * @var FibonacciHeapNode
      */
     public $next = null;
     
@@ -78,11 +75,11 @@ class FibonacciHeapNode implements AddressableHeapHandleInterface
     /**
      * Construct a new Fibonacci heap node
      *
-     * @param AddressableHeapInterface $heap - heap to which the node belongs
+     * @param FibonacciHeap $heap - heap to which the node belongs
      * @param int $key - the node key
      * @param mixed $value - value stored in the node
      */
-    public function __construct(AddressableHeapInterface $heap, int $key, $value)
+    public function __construct(FibonacciHeap $heap, int $key, $value)
     {
         $this->heap = $heap;
         $this->key = $key;
@@ -143,9 +140,9 @@ class FibonacciHeapNode implements AddressableHeapHandleInterface
     /**
      * Get the owner heap of the node
      *
-     * @return AddressableHeapInterface
+     * @return FibonacciHeap
      */
-    public function getOwner(): AddressableHeapInterface
+    public function getOwner(): FibonacciHeap
     {
         if ($this->heap->other != $this->heap) {
             // find root
