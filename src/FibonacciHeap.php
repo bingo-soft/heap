@@ -13,6 +13,13 @@ use InvalidArgumentException;
 class FibonacciHeap
 {
     /**
+     * The heap unique hash
+     *
+     * @var string
+     */
+    private $hash;
+
+    /**
      * Heap node with the minimal key
      *
      * @var FibonacciHeapNode
@@ -53,6 +60,7 @@ class FibonacciHeap
         $this->minRoot = null;
         $this->roots = 0;
         $this->other = $this;
+        $this->hash = uniqid('', true);
     }
 
     /**
@@ -106,6 +114,7 @@ class FibonacciHeap
 
         // move z children into root list
         $x = $z->child;
+        $i = 0;
         while (!is_null($x)) {
             $nextX = ($x->next == $x) ? null : $x->next;
 
@@ -126,6 +135,7 @@ class FibonacciHeap
 
             // advance
             $x = $nextX;
+            $i += 1;
         }
         $z->degree = 0;
         $z->child = null;
@@ -139,6 +149,7 @@ class FibonacciHeap
         $this->size -= 1;
 
         // update minimum root
+        
         if ($z == $z->next) {
             $this->minRoot = null;
         } else {
@@ -171,6 +182,26 @@ class FibonacciHeap
     public function size(): int
     {
         return $this->size;
+    }
+
+    /**
+     * Get the other heap referenced in the current heap
+     *
+     * @return FibonacciHeap
+     */
+    public function getOther(): FibonacciHeap
+    {
+        return $this->other;
+    }
+
+    /**
+     * Reference the other heap in the current heap
+     *
+     * @param FibonacciHeap $other - the other heap
+     */
+    public function setOther(FibonacciHeap $other): void
+    {
+        $this->other = $other;
     }
 
     /**
@@ -288,10 +319,10 @@ class FibonacciHeap
             $deg = $x->degree;
 
             while (true) {
-                $y = $this->aux[$deg];
-                if (is_null($y)) {
+                if (!isset($this->aux[$deg])) {
                     break;
                 }
+                $y = $this->aux[$deg];
 
                 // make sure x's key is smaller
                 if ($y->key < $x->key) {
@@ -352,7 +383,7 @@ class FibonacciHeap
         $first->parent = $second;
 
         $child = $second->child;
-        if (!is_null($child)) {
+        if (is_null($child)) {
             $second->child = $first;
             $first->next = $first;
             $first->prev = $first;

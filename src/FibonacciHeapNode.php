@@ -5,10 +5,17 @@ namespace heap;
 /**
  * Class FibonacciHeapNode
  *
- * @package heap\tree
+ * @package heap\FibonacciHeap
  */
 class FibonacciHeapNode
 {
+    /**
+     * The heap node unique hash
+     *
+     * @var string
+     */
+    private $hash;
+
     /**
      * Node heap
      *
@@ -84,6 +91,7 @@ class FibonacciHeapNode
         $this->heap = $heap;
         $this->key = $key;
         $this->value = $value;
+        $this->hash = uniqid('', true);
     }
 
     /**
@@ -144,17 +152,17 @@ class FibonacciHeapNode
      */
     public function getOwner(): FibonacciHeap
     {
-        if ($this->heap->other != $this->heap) {
+        if ($this->heap->getOther() != $this->heap) {
             // find root
             $root = $this->heap;
-            while ($root != $root->other) {
-                $root = $root->other;
+            while ($root != $root->getOther()) {
+                $root = $root->getOther();
             }
             // path-compression
             $cur = $this->heap;
-            while ($cur->other != $root) {
-                $next = $cur->other;
-                $cur->other = $root;
+            while ($cur->getOther() != $root) {
+                $next = $cur->getOther();
+                $cur->setOther($root);
                 $cur = $next;
             }
             $this->heap = $root;
