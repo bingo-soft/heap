@@ -2,8 +2,8 @@
 
 namespace heap\tree;
 
-use Exception;
 use InvalidArgumentException;
+use heap\exception\NoSuchElementException;
 use heap\MergeableAddressableHeapInterface;
 use heap\AddressableHeapHandleInterface;
 
@@ -92,12 +92,12 @@ class FibonacciHeap implements MergeableAddressableHeapInterface
      *
      * @return AddressableHeapHandleInterface
      *
-     * @throws Exception
+     * @throws NoSuchElementException
      */
     public function findMin(): AddressableHeapHandleInterface
     {
         if ($this->size == 0) {
-            throw new Exception("No such element!");
+            throw new NoSuchElementException("No such element!");
         }
         return $this->minRoot;
     }
@@ -106,11 +106,13 @@ class FibonacciHeap implements MergeableAddressableHeapInterface
      * Get an element with the minimum key.
      *
      * @return AddressableHeapHandleInterface
+     *
+     * @throws NoSuchElementException
      */
     public function deleteMin(): AddressableHeapHandleInterface
     {
         if ($this->size == 0) {
-            throw new Exception("No such element!");
+            throw new NoSuchElementException("No such element!");
         }
         $z = $this->minRoot;
 
@@ -221,6 +223,8 @@ class FibonacciHeap implements MergeableAddressableHeapInterface
      * Meld other heap to the current heap
      *
      * @param MergeableAddressableHeapInterface $other - the heap to be melded
+     *
+     * @throws Exception
      */
     public function meld(MergeableAddressableHeapInterface $other): void
     {
@@ -264,17 +268,19 @@ class FibonacciHeap implements MergeableAddressableHeapInterface
      *
      * @param FibonacciHeapNode $node - the node
      * @param int $newKey - the node new key
+     *
+     * @throws Exception
      */
-    private function decreaseKey(FibonacciHeapNode $node, int $newKey): void
+    public function decreaseKey(FibonacciHeapNode $node, int $newKey): void
     {
         if ($newKey > $node->key) {
-            throw new Exception("Keys can only be decreased!");
+            throw new InvalidArgumentException("Keys can only be decreased!");
         } elseif ($node->key != $newKey) {
-            $node->key = $newKey;
-            
             if (is_null($node->next)) {
-                throw new Exception("Invalid handle!");
+                throw new InvalidArgumentException("Invalid handle!");
             }
+
+            $node->key = $newKey;
 
             // if not root and heap order violation
             $parent = $node->parent;

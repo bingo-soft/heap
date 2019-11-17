@@ -6,7 +6,7 @@
          convertWarningsToExceptions="true"
 >
     <testsuites>
-        <testsuite name="Graph Test Suite">
+        <testsuite name="Heap Test Suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>

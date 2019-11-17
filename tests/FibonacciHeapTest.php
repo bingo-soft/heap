@@ -3,6 +3,9 @@
 namespace tests;
 
 use PHPUnit\Framework\TestCase;
+use InvalidArgumentException;
+use TypeError;
+use heap\exception\NoSuchElementException;
 use heap\tree\FibonacciHeap;
 use heap\tree\FibonacciHeapNode;
 
@@ -181,5 +184,138 @@ class FibonacciHeapTest extends TestCase
             }
         }
         $this->assertTrue($heap->isEmpty());
+    }
+
+    public function testDeleteTwice(): void
+    {
+        $heap = new FibonacciHeap();
+
+        $nodes = [];
+        for ($i = 0; $i < 15; $i += 1) {
+            $nodes[$i] = $heap->insert($i);
+        }
+
+        $nodes[5]->delete();
+        $this->assertEquals(0, $heap->findMin()->getKey());
+        $nodes[7]->delete();
+        $this->assertEquals(0, $heap->findMin()->getKey());
+        $nodes[0]->delete();
+        $this->assertEquals(1, $heap->findMin()->getKey());
+        $nodes[2]->delete();
+        $this->assertEquals(1, $heap->findMin()->getKey());
+        $nodes[1]->delete();
+        $this->assertEquals(3, $heap->findMin()->getKey());
+        $nodes[3]->delete();
+        $this->assertEquals(4, $heap->findMin()->getKey());
+        $nodes[9]->delete();
+        $this->assertEquals(4, $heap->findMin()->getKey());
+        $nodes[4]->delete();
+        $this->assertEquals(6, $heap->findMin()->getKey());
+
+        // again
+        $this->expectException(InvalidArgumentException::class);
+        $nodes[2]->delete();
+    }
+
+    public function testDeleteMindeleteTwice(): void
+    {
+        $heap = new FibonacciHeap();
+        $e1 = $heap->insert(50);
+        $heap->insert(100);
+        $heap->deleteMin();
+        $this->expectException(InvalidArgumentException::class);
+        $e1->delete();
+    }
+
+    public function testDeleteMinDeleteTwiceChained(): void
+    {
+        $heap = new FibonacciHeap();
+        for ($i = 0; $i < 15; $i += 1) {
+            $heap->insert($i);
+        }
+        $this->expectException(InvalidArgumentException::class);
+        $heap->deleteMin()->delete();
+    }
+
+    public function testDeleteMinDecreaseKey(): void
+    {
+        $heap = new FibonacciHeap();
+        for ($i = 100; $i < 200; $i += 1) {
+            $heap->insert($i);
+        }
+        $this->expectException(InvalidArgumentException::class);
+        $heap->deleteMin()->decreaseKey(0);
+    }
+
+    public function testNoElementFindMin(): void
+    {
+        $heap = new FibonacciHeap();
+        $this->expectException(NoSuchElementException::class);
+        $heap->findMin();
+    }
+
+    public function testDeleteMinFindMin(): void
+    {
+        $heap = new FibonacciHeap();
+        $this->expectException(NoSuchElementException::class);
+        $heap->deleteMin();
+    }
+
+    public function testNullPointerException(): void
+    {
+        $heap = new FibonacciHeap();
+        $this->expectException(TypeError::class);
+        $heap->insert(null, null);
+    }
+
+    public function testDecreaseKey(): void
+    {
+        $heap = new FibonacciHeap();
+        $nodes = [];
+        for ($i = 0; $i < 15; $i += 1) {
+            $nodes[$i] = $heap->insert($i + 100);
+        }
+        $this->assertEquals(100, $heap->findMin()->getKey());
+        $nodes[5]->decreaseKey(5);
+        $this->assertEquals(5, $heap->findMin()->getKey());
+        $nodes[1]->decreaseKey(50);
+        $this->assertEquals(5, $heap->findMin()->getKey());
+        $nodes[1]->decreaseKey(20);
+        $this->assertEquals(5, $heap->findMin()->getKey());
+        $nodes[5]->delete();
+        $this->assertEquals(20, $heap->findMin()->getKey());
+        $nodes[10]->decreaseKey(3);
+        $this->assertEquals(3, $heap->findMin()->getKey());
+        $nodes[0]->decreaseKey(0);
+        $this->assertEquals(0, $heap->findMin()->getKey());
+    }
+
+    public function testDecreaseKeyAndDelete(): void
+    {
+        $heap = new FibonacciHeap();
+        $nodes = [];
+        for ($i = 0; $i < 1000; $i += 1) {
+            $nodes[$i] = $heap->insert($i + 2000);
+        }
+        for ($i = 999; $i >= 0; $i -= 1) {
+            $nodes[$i]->decreaseKey($nodes[$i]->getKey() - 2000);
+        }
+        for ($i = 0; $i < 1000; $i += 1) {
+            $this->assertEquals($i, $heap->deleteMin()->getKey());
+        }
+    }
+
+    public function testIncreaseKeyException(): void
+    {
+        $heap = new FibonacciHeap();
+        $nodes = [];
+        for ($i = 0; $i < 15; $i += 1) {
+            $nodes[$i] = $heap->insert($i + 100);
+        }
+        $this->assertEquals(100, $heap->findMin()->getKey());
+        $nodes[5]->decreaseKey(5);
+        $this->assertEquals(5, $heap->findMin()->getKey());
+        $this->expectException(InvalidArgumentException::class);
+        $nodes[1]->decreaseKey(102);
     }
 }

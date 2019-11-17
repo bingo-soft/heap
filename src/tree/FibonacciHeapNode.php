@@ -2,6 +2,7 @@
 
 namespace heap\tree;
 
+use InvalidArgumentException;
 use heap\AddressableHeapHandleInterface;
 
 /**
@@ -139,9 +140,14 @@ class FibonacciHeapNode implements AddressableHeapHandleInterface
 
     /**
      * Delete the node
+     *
+     * @throws InvalidArgumentException
      */
     public function delete(): void
     {
+        if (is_null($this->next)) {
+            throw new InvalidArgumentException("Invalid handle!");
+        }
         $heap = $this->getOwner();
         $heap->forceDecreaseKeyToMinimum($this);
         $heap->deleteMin();
