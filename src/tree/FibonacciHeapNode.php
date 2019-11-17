@@ -1,13 +1,15 @@
 <?php
 
-namespace heap;
+namespace heap\tree;
+
+use heap\AddressableHeapHandleInterface;
 
 /**
  * Class FibonacciHeapNode
  *
- * @package heap\FibonacciHeap
+ * @package heap\tree
  */
-class FibonacciHeapNode
+class FibonacciHeapNode implements AddressableHeapHandleInterface
 {
     /**
      * The heap node unique hash

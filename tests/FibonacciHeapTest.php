@@ -3,8 +3,8 @@
 namespace tests;
 
 use PHPUnit\Framework\TestCase;
-use heap\FibonacciHeap;
-use heap\FibonacciHeapNode;
+use heap\tree\FibonacciHeap;
+use heap\tree\FibonacciHeapNode;
 
 class FibonacciHeapTest extends TestCase
 {

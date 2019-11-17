@@ -1,16 +1,18 @@
 <?php
 
-namespace heap;
+namespace heap\tree;
 
 use Exception;
 use InvalidArgumentException;
+use heap\MergeableAddressableHeapInterface;
+use heap\AddressableHeapHandleInterface;
 
 /**
  * Class FibonacciHeap
  *
- * @package heap
+ * @package heap\tree
  */
-class FibonacciHeap
+class FibonacciHeap implements MergeableAddressableHeapInterface
 {
     /**
      * The heap unique hash
@@ -69,11 +71,11 @@ class FibonacciHeap
      * @param int $key - node key
      * @param null|mixed $value - node value
      *
-     * @return FibonacciHeapNode
+     * @return AddressableHeapHandleInterface
      *
      * @throws Exception
      */
-    public function insert(int $key, $value = null): FibonacciHeapNode
+    public function insert(int $key, $value = null): AddressableHeapHandleInterface
     {
         if ($this->other != $this) {
             throw new Exception("A heap cannot be used after a meld");
@@ -88,11 +90,11 @@ class FibonacciHeap
     /**
      * Find heap node with the minimal key
      *
-     * @return FibonacciHeapNode
+     * @return AddressableHeapHandleInterface
      *
      * @throws Exception
      */
-    public function findMin(): FibonacciHeapNode
+    public function findMin(): AddressableHeapHandleInterface
     {
         if ($this->size == 0) {
             throw new Exception("No such element!");
@@ -103,9 +105,9 @@ class FibonacciHeap
     /**
      * Get an element with the minimum key.
      *
-     * @return FibonacciHeapNode
+     * @return AddressableHeapHandleInterface
      */
-    public function deleteMin(): FibonacciHeapNode
+    public function deleteMin(): AddressableHeapHandleInterface
     {
         if ($this->size == 0) {
             throw new Exception("No such element!");
@@ -218,9 +220,9 @@ class FibonacciHeap
     /**
      * Meld other heap to the current heap
      *
-     * @param FibonacciHeap $other - the heap to be melded
+     * @param MergeableAddressableHeapInterface $other - the heap to be melded
      */
-    public function meld(FibonacciHeap $other): void
+    public function meld(MergeableAddressableHeapInterface $other): void
     {
         if ($other->other != $other) {
             throw new Exception("A heap cannot be used after a meld.");
