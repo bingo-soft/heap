@@ -1,0 +1,19 @@
+before_commands:
+    - "composer install --no-interaction"
+build:
+  nodes:
+    php71:
+      environment:
+        php: 7.1
+        redis: false
+    php72:
+      environment:
+        php: 7.2
+        redis: false
+    coverage:
+      tests:
+        override:
+          - command: vendor/bin/phpunit
+            coverage:
+              file: build/logs/clover.xml                                        
+              format: clover
