@@ -3,19 +3,21 @@
 namespace tests;
 
 use PHPUnit\Framework\TestCase;
+use Exception;
 use InvalidArgumentException;
 use TypeError;
+use heap\AddressableHeapInterface;
 use heap\exception\NoSuchElementException;
-use heap\tree\FibonacciHeap;
-use heap\tree\FibonacciHeapNode;
 
-class FibonacciHeapTest extends TestCase
+abstract class AbstractAddressableHeapTest extends TestCase
 {
-    private const SIZE = 100;
+    protected const SIZE = 100;
+
+    abstract protected function createHeap(): AddressableHeapInterface;
 
     public function testInsert(): void
     {
-        $heap = new FibonacciHeap();
+        $heap = $this->createHeap();
        
         for ($i = 0; $i < self::SIZE; $i += 1) {
             $heap->insert($i);
@@ -32,14 +34,14 @@ class FibonacciHeapTest extends TestCase
 
     public function testSetValue(): void
     {
-        $heap = new FibonacciHeap();
+        $heap = $this->createHeap();
         $heap->insert(1, "value1")->setValue("value2");
         $this->assertEquals("value2", $heap->findMin()->getValue());
     }
 
     public function testEmptyAfterDeleteAll(): void
     {
-        $heap = new FibonacciHeap();
+        $heap = $this->createHeap();
         $heap->insert(780);
         $this->assertEquals($heap->size(), 1);
         $this->assertEquals(780, $heap->findMin()->getKey());
@@ -76,13 +78,14 @@ class FibonacciHeapTest extends TestCase
 
     public function testRandomDelete(): void
     {
-        $heap = new FibonacciHeap();
+        $heap = $this->createHeap();
 
         for ($i = 0; $i < self::SIZE; $i += 1) {
             $heap->insert(random_int(0, 100000));
         }
 
         $prev = null;
+        $i = 0;
         while (!$heap->isEmpty()) {
             $cur = $heap->findMin()->getKey();
             $heap->deleteMin();
@@ -90,12 +93,13 @@ class FibonacciHeapTest extends TestCase
                 $this->assertTrue($prev <= $cur);
             }
             $prev = $cur;
+            $i += 1;
         }
     }
 
     public function testFindDeleteSame(): void
     {
-        $heap = new FibonacciHeap();
+        $heap = $this->createHeap();
 
         for ($i = 0; $i < self::SIZE; $i += 1) {
             $heap->insert(random_int(0, 100000));
@@ -108,7 +112,7 @@ class FibonacciHeapTest extends TestCase
 
     public function testDeleteNodes(): void
     {
-        $heap = new FibonacciHeap();
+        $heap = $this->createHeap();
 
         $nodes = [];
         for ($i = 0; $i < 15; $i += 1) {
@@ -149,7 +153,7 @@ class FibonacciHeapTest extends TestCase
 
     public function testNodesRandomDelete(): void
     {
-        $heap = new FibonacciHeap();
+        $heap = $this->createHeap();
 
         $nodes = [];
         for ($i = 0; $i < 8; $i += 1) {
@@ -170,7 +174,7 @@ class FibonacciHeapTest extends TestCase
 
     public function testAddDelete(): void
     {
-        $heap = new FibonacciHeap();
+        $heap = $this->createHeap();
 
         $nodes = [];
         for ($i = 0; $i < self::SIZE; $i += 1) {
@@ -188,7 +192,7 @@ class FibonacciHeapTest extends TestCase
 
     public function testDeleteTwice(): void
     {
-        $heap = new FibonacciHeap();
+        $heap = $this->createHeap();
 
         $nodes = [];
         for ($i = 0; $i < 15; $i += 1) {
@@ -219,7 +223,7 @@ class FibonacciHeapTest extends TestCase
 
     public function testDeleteMindeleteTwice(): void
     {
-        $heap = new FibonacciHeap();
+        $heap = $this->createHeap();
         $e1 = $heap->insert(50);
         $heap->insert(100);
         $heap->deleteMin();
@@ -229,7 +233,7 @@ class FibonacciHeapTest extends TestCase
 
     public function testDeleteMinDeleteTwiceChained(): void
     {
-        $heap = new FibonacciHeap();
+        $heap = $this->createHeap();
         for ($i = 0; $i < 15; $i += 1) {
             $heap->insert($i);
         }
@@ -239,7 +243,7 @@ class FibonacciHeapTest extends TestCase
 
     public function testDeleteMinDecreaseKey(): void
     {
-        $heap = new FibonacciHeap();
+        $heap = $this->createHeap();
         for ($i = 100; $i < 200; $i += 1) {
             $heap->insert($i);
         }
@@ -249,28 +253,28 @@ class FibonacciHeapTest extends TestCase
 
     public function testNoElementFindMin(): void
     {
-        $heap = new FibonacciHeap();
+        $heap = $this->createHeap();
         $this->expectException(NoSuchElementException::class);
         $heap->findMin();
     }
 
     public function testDeleteMinFindMin(): void
     {
-        $heap = new FibonacciHeap();
+        $heap = $this->createHeap();
         $this->expectException(NoSuchElementException::class);
         $heap->deleteMin();
     }
 
     public function testNullPointerException(): void
     {
-        $heap = new FibonacciHeap();
+        $heap = $this->createHeap();
         $this->expectException(TypeError::class);
         $heap->insert(null, null);
     }
 
     public function testDecreaseKey(): void
     {
-        $heap = new FibonacciHeap();
+        $heap = $this->createHeap();
         $nodes = [];
         for ($i = 0; $i < 15; $i += 1) {
             $nodes[$i] = $heap->insert($i + 100);
@@ -292,7 +296,7 @@ class FibonacciHeapTest extends TestCase
 
     public function testDecreaseKeyAndDelete(): void
     {
-        $heap = new FibonacciHeap();
+        $heap = $this->createHeap();
         $nodes = [];
         for ($i = 0; $i < 1000; $i += 1) {
             $nodes[$i] = $heap->insert($i + 2000);
@@ -307,7 +311,7 @@ class FibonacciHeapTest extends TestCase
 
     public function testIncreaseKeyException(): void
     {
-        $heap = new FibonacciHeap();
+        $heap = $this->createHeap();
         $nodes = [];
         for ($i = 0; $i < 15; $i += 1) {
             $nodes[$i] = $heap->insert($i + 100);

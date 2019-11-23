@@ -2,6 +2,7 @@
 
 namespace heap\tree;
 
+use Exception;
 use InvalidArgumentException;
 use heap\exception\NoSuchElementException;
 use heap\MergeableAddressableHeapInterface;
@@ -103,7 +104,7 @@ class FibonacciHeap implements MergeableAddressableHeapInterface
     }
 
     /**
-     * Get an element with the minimum key.
+     * Delete an element with the minimal key.
      *
      * @return AddressableHeapHandleInterface
      *
@@ -191,9 +192,9 @@ class FibonacciHeap implements MergeableAddressableHeapInterface
     /**
      * Get the other heap referenced in the current heap
      *
-     * @return FibonacciHeap
+     * @return MergeableAddressableHeapInterface
      */
-    public function getOther(): FibonacciHeap
+    public function getOther(): MergeableAddressableHeapInterface
     {
         return $this->other;
     }
@@ -201,10 +202,13 @@ class FibonacciHeap implements MergeableAddressableHeapInterface
     /**
      * Reference the other heap in the current heap
      *
-     * @param FibonacciHeap $other - the other heap
+     * @param MergeableAddressableHeapInterface $other - the other heap
      */
-    public function setOther(FibonacciHeap $other): void
+    public function setOther(MergeableAddressableHeapInterface $other): void
     {
+        if (!($other instanceof FibonacciHeap)) {
+            throw new InvalidArgumentException("The heap must be of type Fibonacci.");
+        }
         $this->other = $other;
     }
 
@@ -228,6 +232,10 @@ class FibonacciHeap implements MergeableAddressableHeapInterface
      */
     public function meld(MergeableAddressableHeapInterface $other): void
     {
+        if (!($other instanceof FibonacciHeap)) {
+            throw new InvalidArgumentException("The heap to be melded must be of type Fibonacci.");
+        }
+
         if ($other->other != $other) {
             throw new Exception("A heap cannot be used after a meld.");
         }
@@ -373,6 +381,9 @@ class FibonacciHeap implements MergeableAddressableHeapInterface
     /*
      * Remove node "first" from the root list and make it a child of "second". Degree of "second"
      * increases by 1 and "first" is unmarked if marked.
+     *
+     * @param FibonacciHeapNode $first - first node
+     * @param FibonacciHeapNode $second - second node
      */
     private function link(FibonacciHeapNode $first, FibonacciHeapNode $second): void
     {
