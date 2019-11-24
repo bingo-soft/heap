@@ -1,14 +1,14 @@
 <?php
 
-namespace heap\tree;
+namespace BingoSoft\Heap\Tree;
 
 use InvalidArgumentException;
-use heap\AddressableHeapHandleInterface;
+use BingoSoft\Heap\AddressableHeapHandleInterface;
 
 /**
  * Class PairingHeapNode
  *
- * @package heap\tree
+ * @package BingoSoft\Heap\Tree
  */
 class PairingHeapNode implements AddressableHeapHandleInterface
 {
@@ -53,6 +53,13 @@ class PairingHeapNode implements AddressableHeapHandleInterface
      * @var PairingHeapNode
      */
     public $o_s;
+
+    /**
+     * Node key
+     *
+     * @var int
+     */
+    public $key;
 
     /**
      * Construct a new Pairing heap node

@@ -1,6 +1,6 @@
 <?php
 
-namespace heap\exception;
+namespace BingoSoft\Heap\Exception;
 
 use Exception;
 

@@ -6,8 +6,8 @@ use PHPUnit\Framework\TestCase;
 use Exception;
 use InvalidArgumentException;
 use TypeError;
-use heap\MergeableAddressableHeapInterface;
-use heap\exception\NoSuchElementException;
+use BingoSoft\Heap\MergeableAddressableHeapInterface;
+use BingoSoft\Heap\Exception\NoSuchElementException;
 
 abstract class AbstractMergeableAddressableHeapTest extends TestCase
 {
@@ -144,7 +144,7 @@ abstract class AbstractMergeableAddressableHeapTest extends TestCase
         while (!$h1->isEmpty()) {
             $cur = $h1->findMin()->getKey();
             $h1->deleteMin();
-            if ($prev != null) {
+            if (!is_null($prev)) {
                 $this->assertTrue($prev <= $cur);
             }
             $prev = $cur;
@@ -169,7 +169,7 @@ abstract class AbstractMergeableAddressableHeapTest extends TestCase
         while (!$h1->isEmpty()) {
             $cur = $h1->findMin()->getKey();
             $h1->deleteMin();
-            if ($prev != null) {
+            if (!is_null($prev)) {
                 $this->assertTrue($prev <= $cur);
             }
             $prev = $cur;
@@ -194,7 +194,7 @@ abstract class AbstractMergeableAddressableHeapTest extends TestCase
         while (!$h1->isEmpty()) {
             $cur = $h1->findMin()->getKey();
             $h1->deleteMin();
-            if ($prev != null) {
+            if (!is_null($prev)) {
                 $this->assertTrue($prev <= $cur);
             }
             $prev = $cur;

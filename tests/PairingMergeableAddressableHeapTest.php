@@ -2,8 +2,8 @@
 
 namespace tests;
 
-use heap\MergeableAddressableHeapInterface;
-use heap\tree\PairingHeap;
+use BingoSoft\Heap\MergeableAddressableHeapInterface;
+use BingoSoft\Heap\Tree\PairingHeap;
 
 class PairingMergeableAddressableHeapTest extends AbstractMergeableAddressableHeapTest
 {

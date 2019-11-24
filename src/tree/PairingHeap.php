@@ -1,17 +1,17 @@
 <?php
 
-namespace heap\tree;
+namespace BingoSoft\Heap\Tree;
 
 use Exception;
 use InvalidArgumentException;
-use heap\exception\NoSuchElementException;
-use heap\MergeableAddressableHeapInterface;
-use heap\AddressableHeapHandleInterface;
+use BingoSoft\Heap\exception\NoSuchElementException;
+use BingoSoft\Heap\MergeableAddressableHeapInterface;
+use BingoSoft\Heap\AddressableHeapHandleInterface;
 
 /**
  * Class PairingHeap
  *
- * @package heap\tree
+ * @package BingoSoft\Heap\Tree
  */
 class PairingHeap implements MergeableAddressableHeapInterface
 {
@@ -172,7 +172,7 @@ class PairingHeap implements MergeableAddressableHeapInterface
         return $this->size;
     }
 
-     /**
+    /**
      * Get the other heap referenced in the current heap
      *
      * @return MergeableAddressableHeapInterface
@@ -233,7 +233,7 @@ class PairingHeap implements MergeableAddressableHeapInterface
         $other->other = $this;
     }
 
-     /**
+    /**
      * Decrease the node key
      *
      * @param PairingHeapNode $node - the node
@@ -273,9 +273,9 @@ class PairingHeap implements MergeableAddressableHeapInterface
      * @param PairingHeapNode $first - first node
      * @param PairingHeapNode $second - second node
      *
-     * @return PairingHeapNode
+     * @return null|PairingHeapNode
      */
-    private function link(?PairingHeapNode $first = null, ?PairingHeapNode $second = null): PairingHeapNode
+    private function link(?PairingHeapNode $first = null, ?PairingHeapNode $second = null): ?PairingHeapNode
     {
         if (is_null($second)) {
             return $first;

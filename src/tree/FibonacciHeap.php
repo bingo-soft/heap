@@ -1,17 +1,17 @@
 <?php
 
-namespace heap\tree;
+namespace BingoSoft\Heap\Tree;
 
 use Exception;
 use InvalidArgumentException;
-use heap\exception\NoSuchElementException;
-use heap\MergeableAddressableHeapInterface;
-use heap\AddressableHeapHandleInterface;
+use BingoSoft\Heap\exception\NoSuchElementException;
+use BingoSoft\Heap\MergeableAddressableHeapInterface;
+use BingoSoft\Heap\AddressableHeapHandleInterface;
 
 /**
  * Class FibonacciHeap
  *
- * @package heap\tree
+ * @package BingoSoft\Heap\Tree
  */
 class FibonacciHeap implements MergeableAddressableHeapInterface
 {
