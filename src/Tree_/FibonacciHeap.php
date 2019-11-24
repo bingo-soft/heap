@@ -4,7 +4,7 @@ namespace Heap\Tree;
 
 use Exception;
 use InvalidArgumentException;
-use Heap\exception\NoSuchElementException;
+use Heap\Exception\NoSuchElementException;
 use Heap\MergeableAddressableHeapInterface;
 use Heap\AddressableHeapHandleInterface;
 
