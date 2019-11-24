@@ -289,8 +289,9 @@ class PairingHeap implements MergeableAddressableHeapInterface
             }
             $first->o_c = $second;
             return $first;
+        } else {
+            return $this->link($second, $first);
         }
-        return $this->link($second, $first);
     }
 
     /**

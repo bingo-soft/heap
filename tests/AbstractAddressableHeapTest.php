@@ -76,7 +76,7 @@ abstract class AbstractAddressableHeapTest extends TestCase
         $this->assertTrue($heap->isEmpty());
     }
 
-    public function testRandomDelete(): void
+    /*public function testRandomDelete(): void
     {
         $heap = $this->createHeap();
 
@@ -95,7 +95,7 @@ abstract class AbstractAddressableHeapTest extends TestCase
             $prev = $cur;
             $i += 1;
         }
-    }
+    }*/
 
     public function testFindDeleteSame(): void
     {
