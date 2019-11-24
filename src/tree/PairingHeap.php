@@ -1,17 +1,17 @@
 <?php
 
-namespace BingoSoft\Heap\Tree;
+namespace Heap\Tree;
 
 use Exception;
 use InvalidArgumentException;
-use BingoSoft\Heap\exception\NoSuchElementException;
-use BingoSoft\Heap\MergeableAddressableHeapInterface;
-use BingoSoft\Heap\AddressableHeapHandleInterface;
+use Heap\exception\NoSuchElementException;
+use Heap\MergeableAddressableHeapInterface;
+use Heap\AddressableHeapHandleInterface;
 
 /**
  * Class PairingHeap
  *
- * @package BingoSoft\Heap\Tree
+ * @package Heap\Tree
  */
 class PairingHeap implements MergeableAddressableHeapInterface
 {

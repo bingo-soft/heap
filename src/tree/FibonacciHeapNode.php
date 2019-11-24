@@ -1,14 +1,14 @@
 <?php
 
-namespace BingoSoft\Heap\Tree;
+namespace Heap\Tree;
 
 use InvalidArgumentException;
-use BingoSoft\Heap\AddressableHeapHandleInterface;
+use Heap\AddressableHeapHandleInterface;
 
 /**
  * Class FibonacciHeapNode
  *
- * @package BingoSoft\Heap\Tree
+ * @package Heap\Tree
  */
 class FibonacciHeapNode implements AddressableHeapHandleInterface
 {

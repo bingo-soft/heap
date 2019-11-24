@@ -6,8 +6,8 @@ use PHPUnit\Framework\TestCase;
 use Exception;
 use InvalidArgumentException;
 use TypeError;
-use BingoSoft\Heap\MergeableAddressableHeapInterface;
-use BingoSoft\Heap\Exception\NoSuchElementException;
+use Heap\MergeableAddressableHeapInterface;
+use Heap\Exception\NoSuchElementException;
 
 abstract class AbstractMergeableAddressableHeapTest extends TestCase
 {

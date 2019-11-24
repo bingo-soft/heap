@@ -2,8 +2,8 @@
 
 namespace tests;
 
-use BingoSoft\Heap\AddressableHeapInterface;
-use BingoSoft\Heap\Tree\FibonacciHeap;
+use Heap\AddressableHeapInterface;
+use Heap\Tree\FibonacciHeap;
 
 class FibonacciAddressableHeapTest extends AbstractAddressableHeapTest
 {

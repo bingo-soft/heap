@@ -1,11 +1,11 @@
 <?php
 
-namespace BingoSoft\Heap;
+namespace Heap;
 
 /**
  * Interface AddressableHeapInterface
  *
- * @package BingoSoft\Heap
+ * @package Heap
  */
 interface AddressableHeapInterface
 {
