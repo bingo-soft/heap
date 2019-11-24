@@ -71,7 +71,7 @@ class FibonacciHeapNode implements AddressableHeapHandleInterface
     /**
      * Node key
      *
-     * @var int
+     * @var mixed
      */
     public $key;
     
@@ -86,10 +86,10 @@ class FibonacciHeapNode implements AddressableHeapHandleInterface
      * Construct a new Fibonacci heap node
      *
      * @param FibonacciHeap $heap - heap to which the node belongs
-     * @param int $key - the node key
+     * @param mixed $key - the node key
      * @param mixed $value - value stored in the node
      */
-    public function __construct(FibonacciHeap $heap, int $key, $value)
+    public function __construct(FibonacciHeap $heap, $key, $value)
     {
         $this->heap = $heap;
         $this->key = $key;
@@ -100,9 +100,9 @@ class FibonacciHeapNode implements AddressableHeapHandleInterface
     /**
      * Get the node key
      *
-     * @return int
+     * @return mixed
      */
-    public function getKey(): int
+    public function getKey()
     {
         return $this->key;
     }
@@ -130,9 +130,9 @@ class FibonacciHeapNode implements AddressableHeapHandleInterface
     /**
      * Decrease the node key
      *
-     * @param int $newKey - new node key
+     * @param mixed $newKey - new node key
      */
-    public function decreaseKey(int $newKey): void
+    public function decreaseKey($newKey): void
     {
         $heap = $this->getOwner();
         $heap->decreaseKey($this, $newKey);

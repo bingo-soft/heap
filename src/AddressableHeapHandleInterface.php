@@ -12,9 +12,9 @@ interface AddressableHeapHandleInterface
     /**
      * Get the node key
      *
-     * @return int
+     * @return mixed
      */
-    public function getKey(): int;
+    public function getKey();
 
     /**
      * Get the node value
@@ -33,9 +33,9 @@ interface AddressableHeapHandleInterface
     /**
      * Decrease the node key
      *
-     * @param int $newKey - new node key
+     * @param mixed $newKey - new node key
      */
-    public function decreaseKey(int $newKey): void;
+    public function decreaseKey($newKey): void;
 
     /**
      * Delete the node

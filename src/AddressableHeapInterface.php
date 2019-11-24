@@ -12,14 +12,14 @@ interface AddressableHeapInterface
     /**
      * Insert a new node to the heap
      *
-     * @param int $key - node key
+     * @param mixed $key - node key
      * @param null|mixed $value - node value
      *
      * @return AddressableHeapHandleInterface
      *
      * @throws Exception
      */
-    public function insert(int $key, $value = null): AddressableHeapHandleInterface;
+    public function insert($key, $value = null): AddressableHeapHandleInterface;
 
     /**
      * Find heap node with the minimal key

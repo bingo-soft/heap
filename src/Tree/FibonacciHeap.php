@@ -69,14 +69,14 @@ class FibonacciHeap implements MergeableAddressableHeapInterface
     /**
      * Insert a new node to the heap
      *
-     * @param int $key - node key
+     * @param mixed $key - node key
      * @param null|mixed $value - node value
      *
      * @return AddressableHeapHandleInterface
      *
      * @throws Exception
      */
-    public function insert(int $key, $value = null): AddressableHeapHandleInterface
+    public function insert($key, $value = null): AddressableHeapHandleInterface
     {
         if ($this->other != $this) {
             throw new Exception("A heap cannot be used after a meld");
@@ -275,11 +275,11 @@ class FibonacciHeap implements MergeableAddressableHeapInterface
      * Decrease the node key
      *
      * @param FibonacciHeapNode $node - the node
-     * @param int $newKey - the node new key
+     * @param mixed $newKey - the node new key
      *
      * @throws Exception
      */
-    public function decreaseKey(FibonacciHeapNode $node, int $newKey): void
+    public function decreaseKey(FibonacciHeapNode $node, $newKey): void
     {
         if ($newKey > $node->key) {
             throw new InvalidArgumentException("Keys can only be decreased!");
