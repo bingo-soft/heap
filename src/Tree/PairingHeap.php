@@ -246,10 +246,13 @@ class PairingHeap implements MergeableAddressableHeapInterface
         if ($newKey > $node->key) {
             throw new InvalidArgumentException("Keys can only be decreased!");
         } elseif ($node->key != $newKey) {
+            $node->key = $newKey;
+            if ($this->root == $node) {
+                return;
+            }
             if (is_null($node->o_s)) {
                 throw new InvalidArgumentException("Invalid handle!");
             }
-            $node->key = $newKey;
             // unlink from parent
             if (!is_null($node->y_s)) {
                 $node->y_s->o_s = $node->o_s;
@@ -284,7 +287,7 @@ class PairingHeap implements MergeableAddressableHeapInterface
         } elseif ($first->key < $second->key) {
             $second->y_s = $first->o_c;
             $second->o_s = $first;
-            if ($first->o_c != null) {
+            if (!is_null($first->o_c)) {
                 $first->o_c->o_s = $second;
             }
             $first->o_c = $second;
